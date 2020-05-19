@@ -13,9 +13,9 @@ namespace WebAppFpis.Controllers
     [ApiController]
     public class ObracunController : ControllerBase
     {
-        private readonly SaruljaContext _context;
+        private readonly MlekaraSaruljaContext _context;
 
-        public ObracunController(SaruljaContext context)
+        public ObracunController(MlekaraSaruljaContext context)
         {
             _context = context;
         }

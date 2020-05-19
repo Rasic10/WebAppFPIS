@@ -11,59 +11,56 @@ namespace WebAppFpis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MlekaraController : ControllerBase
+    public class DrzavniOrganController : ControllerBase
     {
         private readonly MlekaraSaruljaContext _context;
 
-        public MlekaraController(MlekaraSaruljaContext context)
+        public DrzavniOrganController(MlekaraSaruljaContext context)
         {
             _context = context;
         }
 
-        // GET: api/Mlekara
+        // GET: api/DrzavniOrgan
         [HttpGet]
-        public IEnumerable<Mlekara> GetMlekare()
+        public IEnumerable<DrzavniOrgan> GetDrzavniOrgani()
         {
-            return _context.Mlekare;
+            return _context.DrzavniOrgani;
         }
 
-        // GET: api/Mlekara/5
+        // GET: api/DrzavniOrgan/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMlekara([FromRoute] int id)
+        public async Task<IActionResult> GetDrzavniOrgan([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var mlekara = await _context.Mlekare.FindAsync(id);
+            var drzavniOrgan = await _context.DrzavniOrgani.FindAsync(id);
 
-            if (mlekara == null)
+            if (drzavniOrgan == null)
             {
                 return NotFound();
             }
 
-            // Found Data and add weak object
-            mlekara.Mesto = await _context.Mesta.FindAsync(mlekara.MestoID);
-
-            return Ok(mlekara);
+            return Ok(drzavniOrgan);
         }
 
-        // PUT: api/Mlekara/5
+        // PUT: api/DrzavniOrgan/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMlekara([FromRoute] int id, [FromBody] Mlekara mlekara)
+        public async Task<IActionResult> PutDrzavniOrgan([FromRoute] int id, [FromBody] DrzavniOrgan drzavniOrgan)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != mlekara.MlekaraID)
+            if (id != drzavniOrgan.SifraOrganaID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(mlekara).State = EntityState.Modified;
+            _context.Entry(drzavniOrgan).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +68,7 @@ namespace WebAppFpis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MlekaraExists(id))
+                if (!DrzavniOrganExists(id))
                 {
                     return NotFound();
                 }
@@ -84,45 +81,45 @@ namespace WebAppFpis.Controllers
             return NoContent();
         }
 
-        // POST: api/Mlekara
+        // POST: api/DrzavniOrgan
         [HttpPost]
-        public async Task<IActionResult> PostMlekara([FromBody] Mlekara mlekara)
+        public async Task<IActionResult> PostDrzavniOrgan([FromBody] DrzavniOrgan drzavniOrgan)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Mlekare.Add(mlekara);
+            _context.DrzavniOrgani.Add(drzavniOrgan);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMlekara", new { id = mlekara.MlekaraID }, mlekara);
+            return CreatedAtAction("GetDrzavniOrgan", new { id = drzavniOrgan.SifraOrganaID }, drzavniOrgan);
         }
 
-        // DELETE: api/Mlekara/5
+        // DELETE: api/DrzavniOrgan/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMlekara([FromRoute] int id)
+        public async Task<IActionResult> DeleteDrzavniOrgan([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var mlekara = await _context.Mlekare.FindAsync(id);
-            if (mlekara == null)
+            var drzavniOrgan = await _context.DrzavniOrgani.FindAsync(id);
+            if (drzavniOrgan == null)
             {
                 return NotFound();
             }
 
-            _context.Mlekare.Remove(mlekara);
+            _context.DrzavniOrgani.Remove(drzavniOrgan);
             await _context.SaveChangesAsync();
 
-            return Ok(mlekara);
+            return Ok(drzavniOrgan);
         }
 
-        private bool MlekaraExists(int id)
+        private bool DrzavniOrganExists(int id)
         {
-            return _context.Mlekare.Any(e => e.MlekaraID == id);
+            return _context.DrzavniOrgani.Any(e => e.SifraOrganaID == id);
         }
     }
 }

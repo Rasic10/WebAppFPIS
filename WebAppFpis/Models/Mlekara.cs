@@ -11,7 +11,8 @@ namespace WebAppFpis.Models
         public int PIB { get; set; }
         public string NazivMlekare { get; set; }
         public int MaticniBroj { get; set; }
-        public int MestaID { get; set; }
+
+        public int MestoID { get; set; }
 
         public Mesto Mesto { get; set; }
     }

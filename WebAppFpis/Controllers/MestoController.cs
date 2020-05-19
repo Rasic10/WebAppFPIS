@@ -13,9 +13,9 @@ namespace WebAppFpis.Controllers
     [ApiController]
     public class MestoController : ControllerBase
     {
-        private readonly SaruljaContext _context;
+        private readonly MlekaraSaruljaContext _context;
 
-        public MestoController(SaruljaContext context)
+        public MestoController(MlekaraSaruljaContext context)
         {
             _context = context;
         }
