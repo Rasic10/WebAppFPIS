@@ -1,22 +1,26 @@
-import React, { Component } from "react";
-import { Route } from "react-router";
-import { Layout } from "./components/Layout";
+import React from "react";
+import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from "./components/Home";
 import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
-import Obracun from "./components/Obracun";
+import Obracuni from "./components/Obracuni";
+import { NavMenu } from "./components/NavMenu";
 
-export default class App extends Component {
-  displayName = App.name;
-
-  render() {
-    return (
-      <Layout>
-        <Route exact path="/" component={Home} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/fetchdata" component={FetchData} />
-        <Route path="/obracun" component={Obracun} />
-      </Layout>
-    );
-  }
+function App() {
+  return (
+    <BrowserRouter>
+      <NavMenu />
+      <div className="container">
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/counter" component={Counter} />
+          <Route path="/fetchdata" component={FetchData} />
+          <Route path="/obracuni" component={Obracuni} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 }
+
+export default App;

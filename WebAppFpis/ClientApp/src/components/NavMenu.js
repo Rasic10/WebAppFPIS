@@ -1,44 +1,22 @@
 ﻿import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Glyphicon, Nav, Navbar, NavItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import "./NavMenu.css";
+import { Nav, Navbar } from "react-bootstrap";
 
 export class NavMenu extends Component {
   displayName = NavMenu.name;
 
   render() {
     return (
-      <Navbar inverse fixedTop fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to={"/"}>Farma Šarulja</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <LinkContainer to={"/"} exact>
-              <NavItem>
-                <Glyphicon glyph="home" /> Home
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={"/counter"}>
-              <NavItem>
-                <Glyphicon glyph="education" /> Counter
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={"/fetchdata"}>
-              <NavItem>
-                <Glyphicon glyph="th-list" /> Fetch data
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={"/obracun"}>
-              <NavItem>
-                <Glyphicon glyph="th-list" /> Obracun
-              </NavItem>
-            </LinkContainer>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand>Farma Sarulja</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/counter">Counter</Nav.Link>
+            <Nav.Link href="/fetchdata">Fetch Data</Nav.Link>
+            <Nav.Link href="/obracuni">Obracuni</Nav.Link>
           </Nav>
+          <Nav></Nav>
         </Navbar.Collapse>
       </Navbar>
     );
