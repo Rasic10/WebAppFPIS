@@ -11,56 +11,56 @@ namespace WebAppFpis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DrzavniOrganController : ControllerBase
+    public class KorisnikController : ControllerBase
     {
         private readonly MlekaraSaruljaContext _context;
 
-        public DrzavniOrganController(MlekaraSaruljaContext context)
+        public KorisnikController(MlekaraSaruljaContext context)
         {
             _context = context;
         }
 
-        // GET: api/DrzavniOrgan
+        // GET: api/Korisnik
         [HttpGet]
-        public IEnumerable<DrzavniOrgan> GetDrzavniOrgani()
+        public IEnumerable<Korisnik> GetKorisnik()
         {
-            return _context.DrzavniOrgani.Include(s => s.Adresa);
+            return _context.Korisnik;
         }
 
-        // GET: api/DrzavniOrgan/5
+        // GET: api/Korisnik/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDrzavniOrgan([FromRoute] int id)
+        public async Task<IActionResult> GetKorisnik([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var drzavniOrgan = await _context.DrzavniOrgani.FindAsync(id);
+            var korisnik = await _context.Korisnik.FindAsync(1);
 
-            if (drzavniOrgan == null)
+            if (korisnik == null)
             {
                 return NotFound();
             }
 
-            return Ok(drzavniOrgan);
+            return Ok(korisnik);
         }
 
-        // PUT: api/DrzavniOrgan/5
+        // PUT: api/Korisnik/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDrzavniOrgan([FromRoute] int id, [FromBody] DrzavniOrgan drzavniOrgan)
+        public async Task<IActionResult> PutKorisnik([FromRoute] int id, [FromBody] Korisnik korisnik)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != drzavniOrgan.SifraOrganaID)
+            if (id != korisnik.korisnikID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(drzavniOrgan).State = EntityState.Modified;
+            _context.Entry(korisnik).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace WebAppFpis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DrzavniOrganExists(id))
+                if (!KorisnikExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,47 @@ namespace WebAppFpis.Controllers
             return NoContent();
         }
 
-        // POST: api/DrzavniOrgan
+        // POST: api/Korisnik
         [HttpPost]
-        public async Task<IActionResult> PostDrzavniOrgan([FromBody] DrzavniOrgan drzavniOrgan)
+        public async Task<IActionResult> PostKorisnik([FromBody] Korisnik korisnik)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.DrzavniOrgani.Add(drzavniOrgan);
+            _context.Korisnik.Add(korisnik);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDrzavniOrgan", new { id = drzavniOrgan.SifraOrganaID }, drzavniOrgan);
+            return CreatedAtAction("GetKorisnik", new { id = korisnik.korisnikID }, korisnik);
         }
 
-        // DELETE: api/DrzavniOrgan/5
+
+
+        // DELETE: api/Korisnik/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDrzavniOrgan([FromRoute] int id)
+        public async Task<IActionResult> DeleteKorisnik([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var drzavniOrgan = await _context.DrzavniOrgani.FindAsync(id);
-            if (drzavniOrgan == null)
+            var korisnik = await _context.Korisnik.FindAsync(id);
+            if (korisnik == null)
             {
                 return NotFound();
             }
 
-            _context.DrzavniOrgani.Remove(drzavniOrgan);
+            _context.Korisnik.Remove(korisnik);
             await _context.SaveChangesAsync();
 
-            return Ok(drzavniOrgan);
+            return Ok(korisnik);
         }
 
-        private bool DrzavniOrganExists(int id)
+        private bool KorisnikExists(int id)
         {
-            return _context.DrzavniOrgani.Any(e => e.SifraOrganaID == id);
+            return _context.Korisnik.Any(e => e.korisnikID == id);
         }
     }
 }

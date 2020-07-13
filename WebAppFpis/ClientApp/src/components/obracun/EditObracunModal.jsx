@@ -6,6 +6,20 @@ import IconButton from "@material-ui/core/IconButton";
 import Alert from "@material-ui/lab/Alert";
 
 import "./addObracunModal.css";
+import { InputLabel, Select, FormControl } from "@material-ui/core";
+
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  // console.log("datum:::", [year, month, day].join('-'));
+  return [year, month, day].join("-");
+}
 
 class EditObracunModal extends Component {
   constructor(props) {
@@ -30,11 +44,11 @@ class EditObracunModal extends Component {
       },
       body: JSON.stringify({
         obracunID: event.target.obracunID.value,
-        mlekaraID: event.target.mlekaraID.value,
+        mlekaraID: this.props.mlekaraid,
         datumObracuna: event.target.datumObracuna.value,
         periodOd: event.target.periodOd.value,
         periodDo: event.target.periodDo.value,
-        litara: event.target.litara.value,
+        litara: this.state.litara,
         kilograma: event.target.kilograma.value,
         mlecneMasti: event.target.mlecneMasti.value,
         proteina: event.target.proteina.value,
@@ -56,7 +70,24 @@ class EditObracunModal extends Component {
     });
   };
 
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
+    const {
+      mlekaraID,
+      datumObracuna,
+      periodOd,
+      periodDo,
+      litara = this.props.litara,
+      kilograma = this.props.kilograma,
+      mlecneMasti = this.props.mlecnemasti,
+      proteina = this.props.proteina,
+      somatskeCelije = this.props.somatskecelije,
+      suvaMaterijaBezMasti = this.props.suvamaterijabezmasti,
+    } = this.state;
+
     return (
       <div>
         <Snackbar
@@ -107,12 +138,13 @@ class EditObracunModal extends Component {
               </Row>
               <Row>
                 <Col sm={6}>
-                  <Form.Label>MlekaraID</Form.Label>
+                  <Form.Label>Mlekara</Form.Label>
                   <Form.Control
                     type="text"
                     name="mlekaraID"
                     required
-                    defaultValue={this.props.mlekaraid}
+                    disabled
+                    defaultValue={this.props.mlekara}
                     placeholder="Mlekara ID"
                   />
                 </Col>
@@ -121,30 +153,69 @@ class EditObracunModal extends Component {
                   <Form.Control
                     type="date"
                     name="datumObracuna"
-                    defaultValue={this.props.datumobracuna}
+                    defaultValue={formatDate(this.props.datumobracuna)}
                     placeholder="Datum Obracuna"
                   />
                 </Col>
               </Row>
               <Row>
                 <Col sm={6}>
-                  <Form.Label>Period od</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="periodOd"
-                    required
-                    defaultValue={this.props.periodod}
-                    placeholder="Period od"
-                  />
+                  <FormControl id="periodOd" name="periodOd" variant="outlined">
+                    <InputLabel htmlFor="outlined-age-native-simple">
+                      Period od
+                    </InputLabel>
+                    <Select
+                      native
+                      defaultValue={this.props.periodod}
+                      label="Period od"
+                      inputProps={{
+                        name: "periodOd",
+                        id: "outlined-age-native-simple",
+                      }}
+                    >
+                      <option value="Januar">Januar</option>
+                      <option value="Februar">Februar</option>
+                      <option value="Mart">Mart</option>
+                      <option value="April">April</option>
+                      <option value="Maj">Maj</option>
+                      <option value="Jun">Jun</option>
+                      <option value="Jul">Jul</option>
+                      <option value="Avgust">Avgust</option>
+                      <option value="Septembar">Septembar</option>
+                      <option value="Oktobar">Oktobar</option>
+                      <option value="Novembar">Novembar</option>
+                      <option value="Decembar">Decembar</option>
+                    </Select>
+                  </FormControl>
                 </Col>
                 <Col sm={6}>
-                  <Form.Label>Period do</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="periodDo"
-                    defaultValue={this.props.perioddo}
-                    placeholder="Period do"
-                  />
+                  <FormControl id="periodDo" name="periodDo" variant="outlined">
+                    <InputLabel htmlFor="outlined-age-native-simple">
+                      Period do
+                    </InputLabel>
+                    <Select
+                      native
+                      defaultValue={this.props.perioddo}
+                      label="Period do"
+                      inputProps={{
+                        name: "periodDo",
+                        id: "outlined-age-native-simple",
+                      }}
+                    >
+                      <option value="Januar">Januar</option>
+                      <option value="Februar">Februar</option>
+                      <option value="Mart">Mart</option>
+                      <option value="April">April</option>
+                      <option value="Maj">Maj</option>
+                      <option value="Jun">Jun</option>
+                      <option value="Jul">Jul</option>
+                      <option value="Avgust">Avgust</option>
+                      <option value="Septembar">Septembar</option>
+                      <option value="Oktobar">Oktobar</option>
+                      <option value="Novembar">Novembar</option>
+                      <option value="Decembar">Decembar</option>
+                    </Select>
+                  </FormControl>
                 </Col>
               </Row>
               <Row>
@@ -154,7 +225,10 @@ class EditObracunModal extends Component {
                     type="text"
                     name="litara"
                     required
-                    defaultValue={this.props.litara}
+                    value={litara}
+                    isInvalid={!isFinite(litara)}
+                    isValid={litara !== "" && isFinite(litara)}
+                    onChange={this.changeHandler}
                     placeholder="Litara"
                   />
                 </Col>
@@ -163,7 +237,10 @@ class EditObracunModal extends Component {
                   <Form.Control
                     type="text"
                     name="kilograma"
-                    defaultValue={this.props.kilograma}
+                    value={kilograma}
+                    isInvalid={!isFinite(kilograma)}
+                    isValid={kilograma !== "" && isFinite(kilograma)}
+                    onChange={this.changeHandler}
                     placeholder="Kilograma"
                   />
                 </Col>
@@ -172,7 +249,10 @@ class EditObracunModal extends Component {
                   <Form.Control
                     type="text"
                     name="mlecneMasti"
-                    defaultValue={this.props.mlecnemasti}
+                    value={mlecneMasti}
+                    isInvalid={!isFinite(mlecneMasti)}
+                    isValid={mlecneMasti !== "" && isFinite(mlecneMasti)}
+                    onChange={this.changeHandler}
                     placeholder="Mlecne masti"
                   />
                 </Col>
@@ -184,7 +264,10 @@ class EditObracunModal extends Component {
                     type="text"
                     name="proteina"
                     required
-                    defaultValue={this.props.proteina}
+                    value={proteina}
+                    isInvalid={!isFinite(proteina)}
+                    isValid={proteina !== "" && isFinite(proteina)}
+                    onChange={this.changeHandler}
                     placeholder="Proteina"
                   />
                 </Col>
@@ -193,7 +276,10 @@ class EditObracunModal extends Component {
                   <Form.Control
                     type="text"
                     name="somatskeCelije"
-                    defaultValue={this.props.somatskecelije}
+                    value={somatskeCelije}
+                    isInvalid={!isFinite(somatskeCelije)}
+                    isValid={somatskeCelije !== "" && isFinite(somatskeCelije)}
+                    onChange={this.changeHandler}
                     placeholder="Somatske celije"
                   />
                 </Col>
@@ -202,7 +288,13 @@ class EditObracunModal extends Component {
                   <Form.Control
                     type="text"
                     name="suvaMaterijaBezMasti"
-                    defaultValue={this.props.suvamaterijabezmasti}
+                    value={suvaMaterijaBezMasti}
+                    isInvalid={!isFinite(suvaMaterijaBezMasti)}
+                    isValid={
+                      suvaMaterijaBezMasti !== "" &&
+                      isFinite(suvaMaterijaBezMasti)
+                    }
+                    onChange={this.changeHandler}
                     placeholder="Suva materija bez masti"
                   />
                 </Col>

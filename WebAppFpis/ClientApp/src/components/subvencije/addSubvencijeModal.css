@@ -1,0 +1,28 @@
+#addButton {
+  float: right;
+  margin-top: 15px;
+}
+
+#zaposlen {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+#drzavniOrgan {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+#mestoIzjave {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+#mestoPodnosenja {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  width: 100%;
+}

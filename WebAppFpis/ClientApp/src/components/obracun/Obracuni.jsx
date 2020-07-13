@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonToolbar, Row, Col } from "react-bootstrap";
+import { Button, ButtonToolbar, Row, Col, Form } from "react-bootstrap";
 //import { Link } from "react-router-dom";
 import AddObracunModal from "./AddObracunModal";
 import EditObracunModal from "./EditObracunModal";
@@ -13,12 +13,20 @@ class Obracuni extends Component {
       loading: true,
       addModalShow: false,
       editModalShow: false,
+      mlekare: [],
+      search: "",
     };
   }
 
   // ova metoda se poziva kad se komponenta renderuje
   componentDidMount() {
     this.refreshList();
+
+    fetch("http://localhost:55266/api/mlekara/")
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ mlekare: data });
+      });
   }
 
   componentDidUpdate() {
@@ -27,7 +35,7 @@ class Obracuni extends Component {
 
   // osvezavanje liste obracuna
   refreshList() {
-    fetch("api/Obracun")
+    fetch("http://localhost:55266/api/obracun/")
       .then((response) => response.json())
       .then((data) => {
         this.setState({ obracuni: data, loading: false });
@@ -55,6 +63,18 @@ class Obracuni extends Component {
     }
   }
 
+  search = (e) => {
+    this.setState({
+      obracuni: this.state.obracuni.filter(
+        (obracun) =>
+          obracun.mlekara.nazivMlekare
+            .toLowerCase()
+            .indexOf(this.state.search) === 1
+      ),
+    });
+    console.log("asd" + e.target.value);
+  };
+
   render() {
     const {
       obracunid,
@@ -68,6 +88,8 @@ class Obracuni extends Component {
       proteina,
       somatskecelije,
       suvamaterijabezmasti,
+      mlekara,
+      search,
     } = this.state;
     let addModalClose = () => this.setState({ addModalShow: false });
     let editModalClose = () => this.setState({ editModalShow: false });
@@ -94,6 +116,7 @@ class Obracuni extends Component {
           <AddObracunModal
             show={this.state.addModalShow}
             onHide={addModalClose}
+            mlekare={this.state.mlekare}
           ></AddObracunModal>
 
           <EditObracunModal
@@ -110,6 +133,7 @@ class Obracuni extends Component {
             proteina={proteina}
             somatskecelije={somatskecelije}
             suvamaterijabezmasti={suvamaterijabezmasti}
+            mlekara={mlekara}
           ></EditObracunModal>
         </div>
 
@@ -118,6 +142,7 @@ class Obracuni extends Component {
           <thead>
             <tr>
               <th>Sifra obracuna</th>
+              <th>Naziv mlekare</th>
               <th>Datum</th>
               <th>Period od</th>
               <th>Period do</th>
@@ -128,6 +153,7 @@ class Obracuni extends Component {
             {this.state.obracuni.map((obracunItem) => (
               <tr key={obracunItem.obracunID}>
                 <td>{obracunItem.obracunID}</td>
+                <td>{obracunItem.mlekara.nazivMlekare}</td>
                 <td>
                   {new Date(obracunItem.datumObracuna).toLocaleDateString()}
                 </td>
@@ -153,6 +179,7 @@ class Obracuni extends Component {
                           somatskecelije: obracunItem.somatskeCelije,
                           suvamaterijabezmasti:
                             obracunItem.suvaMaterijaBezMasti,
+                          mlekara: obracunItem.mlekara.nazivMlekare,
                         })
                       }
                     >

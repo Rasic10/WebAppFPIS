@@ -96,6 +96,21 @@ namespace WebAppFpis.Controllers
             return CreatedAtAction("GetStavkaZahtevaZaSubvencije", new { id = stavkaZahtevaZaSubvencije.SifraStavkeID }, stavkaZahtevaZaSubvencije);
         }
 
+        // POST: api/StavkaZahtevaZaSubvencije/data
+        [HttpPost("data")]
+        public async Task<IActionResult> PostDataStavkaZahtevaZaSubvencije([FromBody] StavkaZahtevaZaSubvencije[] stavkaZahtevaZaSubvencije)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.StavkaZahtevaZaSubvencija.AddRange(stavkaZahtevaZaSubvencije);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // DELETE: api/StavkaZahtevaZaSubvencije/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStavkaZahtevaZaSubvencije([FromRoute] int id)

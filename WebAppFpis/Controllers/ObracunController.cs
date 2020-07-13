@@ -24,7 +24,7 @@ namespace WebAppFpis.Controllers
         [HttpGet]
         public IEnumerable<Obracun> GetObracuni()
         {
-            return _context.Obracuni;
+            return _context.Obracuni.Include(obracun => obracun.Mlekara);
         }
 
         // GET: api/Obracun/5

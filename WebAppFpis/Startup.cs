@@ -67,6 +67,9 @@ namespace WebAppFpis
                     template: "{controller}/{action=Index}/{id?}");
             });
 
+            // Basic Authentication
+            app.UseAuthentication();
+
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppFpis.Models;
 
 namespace WebAppFpis.Models
 {
@@ -32,5 +33,7 @@ namespace WebAppFpis.Models
             modelBuilder.Entity<DrzavniOrgan>().ToTable("DrzavniOrgan");
             modelBuilder.Entity<StavkaZahtevaZaSubvencije>().ToTable("StavkaZahtevaZaSubvencije");
         }
+
+        public DbSet<WebAppFpis.Models.Korisnik> Korisnik { get; set; }
     }
 }

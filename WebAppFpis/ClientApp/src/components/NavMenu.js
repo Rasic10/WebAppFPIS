@@ -11,10 +11,11 @@ export class NavMenu extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/counter">Counter</Nav.Link>
-            <Nav.Link href="/fetchdata">Fetch Data</Nav.Link>
+            <Nav.Link href="/">Pocetna</Nav.Link>
+            {/* <Nav.Link href="/counter">Counter</Nav.Link>
+            <Nav.Link href="/fetchdata">Fetch Data</Nav.Link> */}
             <Nav.Link href="/obracuni">Obracuni</Nav.Link>
+            <Nav.Link href="/subvencije">Subvencije</Nav.Link>
           </Nav>
           <Nav></Nav>
         </Navbar.Collapse>
